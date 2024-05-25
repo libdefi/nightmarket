@@ -8,7 +8,7 @@ const Event: React.FC = () => {
   const [selectedBet, setSelectedBet] = useState<'YES' | 'NO'>('YES');
 
   return (
-    <div className="space-y-4 flex">
+    <div className="flex space-x-8">
       <div className="flex-1 space-y-4">
         <div className="flex space-x-4">
           <div className="flex items-center space-x-2">
@@ -20,7 +20,7 @@ const Event: React.FC = () => {
             <p>Nov 5, 2024</p>
           </div>
         </div>
-        <h2 className="text-xl font-bold">Which Alliance will win the 1st spot on Primodium?</h2>
+        <h2 className="text-2xl font-bold">Which Alliance will win the 1st spot on Primodium?</h2>
         <PredictionTable 
           onSelectOutcome={setSelectedOutcome} 
           selectedBet={selectedBet}
