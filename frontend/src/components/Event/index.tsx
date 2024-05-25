@@ -1,20 +1,28 @@
+import { useState } from 'react';
 import { TrophyIcon, ClockIcon } from '@heroicons/react/20/solid';
 import PredictionTable from '../Table/PredictionTable';
+import Card from '../Card';
+
 const Event: React.FC = () => {
+  const [selectedOutcome, setSelectedOutcome] = useState<string | null>(null);
+
   return (
-    <div className="space-y-4">
-      <div className="flex space-x-4">
-        <div className="flex items-center space-x-2">
-          <TrophyIcon className="h-6 w-6 text-gray-400" />
-          <p>$134,802,457 Bet</p>
+    <div className="space-y-4 flex">
+      <div className="flex-1 space-y-4">
+        <div className="flex space-x-4">
+          <div className="flex items-center space-x-2">
+            <TrophyIcon className="h-6 w-6 text-gray-400" />
+            <p>$134,802,457 Bet</p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <ClockIcon className="h-6 w-6 text-gray-400" />
+            <p>Nov 5, 2024</p>
+          </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <ClockIcon className="h-6 w-6 text-gray-400" />
-          <p>Nov 5, 2024</p>
-        </div>
+        <h2 className="text-xl font-bold">Which Alliance will win the 1st spot on Primodium?</h2>
+        <PredictionTable onSelectOutcome={setSelectedOutcome} />
       </div>
-      <h2 className="text-xl font-bold">Which Alliance will win the 1st spot on Primodium?</h2>
-      <PredictionTable />
+      <Card selectedOutcome={selectedOutcome} />
     </div>
   );
 };
