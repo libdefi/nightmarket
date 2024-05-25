@@ -1,6 +1,5 @@
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
-import "reactflow/dist/style.css";
 import { WagmiProvider, createConfig, http } from "wagmi";
 import { baseSepolia, base } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
