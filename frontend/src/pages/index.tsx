@@ -23,7 +23,7 @@ const Home: NextPage = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex flex-grow justify-center mt-8 mx-8">
+      <div className="flex flex-grow justify-center mt-8 mx-20">
         {!isMobile ? (
           <Event />
         ) : (

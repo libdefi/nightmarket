@@ -14,12 +14,12 @@ const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({ outcome, chan
   return (
     <tr className="border-t border-b">
       <td className="px-4 py-2">
-        <p className="font-bold">{outcome}</p>
+        <p className="text-2xl font-bold">{outcome}</p>
       </td>
       <td className="px-4 py-2">
-        <p className="text-2xl font-bold">{chance}</p>
+        <p className="text-2xl font-bold text-center">{chance}</p>
       </td>
-      <td className="px-4 py-2">
+      <td className="px-4 py-2 text-right">
         <button
           className={`px-4 py-2 rounded ${
             isSelected && selectedBet === 'YES' ? 'bg-green-500 text-white' : 'bg-green-200 text-green-700'
