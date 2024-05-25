@@ -4,7 +4,6 @@ import { WagmiProvider, createConfig, http } from "wagmi";
 import { baseSepolia, base } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
-import { GoogleAnalytics } from "@next/third-parties/google";
 
 const config = createConfig(
   getDefaultConfig({
@@ -35,9 +34,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider>
           <Component {...pageProps} />
-          <GoogleAnalytics
-            gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ""}
-          />
         </ConnectKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
