@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as ToasterSonner } from "@/components/ui/sonner"
-
+import Event from "components/Event";
 const Home: NextPage = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
     <div className="flex flex-col h-screen">
       <div className="flex flex-grow">
         {!isMobile ? (
-            <p>Hello World</p>
+            <Event />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <span>Unavailable on mobile</span>
