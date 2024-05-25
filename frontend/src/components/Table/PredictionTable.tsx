@@ -3,9 +3,11 @@ import PredictionTableBody from './PredictionTableBody';
 
 interface PredictionTableProps {
   onSelectOutcome: (outcome: string) => void;
+  selectedBet: 'YES' | 'NO';
+  onSelectBet: (bet: 'YES' | 'NO') => void;
 }
 
-const PredictionTable: React.FC<PredictionTableProps> = ({ onSelectOutcome }) => {
+const PredictionTable: React.FC<PredictionTableProps> = ({ onSelectOutcome, selectedBet, onSelectBet }) => {
   const data = [
     { outcome: "WASD", chance: "19%", betYesAmount: "0.1 ETH", betNoAmount: "0.05 ETH" },
     { outcome: "WASDx", chance: "19%", betYesAmount: "0.1 ETH", betNoAmount: "0.05 ETH" },
@@ -17,7 +19,6 @@ const PredictionTable: React.FC<PredictionTableProps> = ({ onSelectOutcome }) =>
   ];
 
   const [selectedRow, setSelectedRow] = useState<number>(0);
-  const [selectedBet, setSelectedBet] = useState<'YES' | 'NO'>('YES');
 
   useEffect(() => {
     onSelectOutcome(data[0].outcome); // デフォルトで最初のアウトカムを選択
@@ -25,7 +26,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({ onSelectOutcome }) =>
 
   const handleSelectBet = (index: number, bet: 'YES' | 'NO') => {
     setSelectedRow(index);
-    setSelectedBet(bet);
+    onSelectBet(bet);
     onSelectOutcome(data[index].outcome);
   };
 

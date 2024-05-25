@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TrophyIcon, ClockIcon } from '@heroicons/react/20/solid';
 import PredictionTable from '../Table/PredictionTable';
 import Card from '../Card';
 
 const Event: React.FC = () => {
   const [selectedOutcome, setSelectedOutcome] = useState<string | null>(null);
+  const [selectedBet, setSelectedBet] = useState<'YES' | 'NO'>('YES');
 
   return (
     <div className="space-y-4 flex">
@@ -20,9 +21,17 @@ const Event: React.FC = () => {
           </div>
         </div>
         <h2 className="text-xl font-bold">Which Alliance will win the 1st spot on Primodium?</h2>
-        <PredictionTable onSelectOutcome={setSelectedOutcome} />
+        <PredictionTable 
+          onSelectOutcome={setSelectedOutcome} 
+          selectedBet={selectedBet}
+          onSelectBet={setSelectedBet} 
+        />
       </div>
-      <Card selectedOutcome={selectedOutcome} />
+      <Card 
+        selectedOutcome={selectedOutcome} 
+        selectedBet={selectedBet}
+        onSelectBet={setSelectedBet} 
+      />
     </div>
   );
 };

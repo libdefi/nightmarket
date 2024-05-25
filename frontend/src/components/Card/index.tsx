@@ -3,11 +3,12 @@ import { ConnectWallet } from "components/Button/ConnectWallet";
 
 interface CardProps {
   selectedOutcome: string | null;
+  selectedBet: 'YES' | 'NO';
+  onSelectBet: (bet: 'YES' | 'NO') => void;
 }
 
-const Card: React.FC<CardProps> = ({ selectedOutcome }) => {
+const Card: React.FC<CardProps> = ({ selectedOutcome, selectedBet, onSelectBet }) => {
   const [shares, setShares] = useState(0);
-  const [selectedOutcomeState, setSelectedOutcomeState] = useState<'YES' | 'NO'>('YES');
   const [selectedTab, setSelectedTab] = useState<'BUY' | 'SELL'>('BUY');
 
   const incrementShares = () => setShares(shares + 0.01);
@@ -39,17 +40,17 @@ const Card: React.FC<CardProps> = ({ selectedOutcome }) => {
         <div className="flex justify-between mt-1 space-x-2">
           <button
             className={`flex-1 py-1 text-center rounded ${
-              selectedOutcomeState === 'YES' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-500'
+              selectedBet === 'YES' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-500'
             }`}
-            onClick={() => setSelectedOutcomeState('YES')}
+            onClick={() => onSelectBet('YES')}
           >
             YES
           </button>
           <button
             className={`flex-1 py-1 text-center rounded ${
-              selectedOutcomeState === 'NO' ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-500'
+              selectedBet === 'NO' ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-500'
             }`}
-            onClick={() => setSelectedOutcomeState('NO')}
+            onClick={() => onSelectBet('NO')}
           >
             NO
           </button>
