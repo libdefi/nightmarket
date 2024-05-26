@@ -9,13 +9,13 @@ interface PredictionTableProps {
 
 const PredictionTable: React.FC<PredictionTableProps> = ({ onSelectOutcome, selectedBet, onSelectBet }) => {
   const data = [
-    { outcome: "WASD", chance: "19%", betYesAmount: "0.1 ETH", betNoAmount: "0.05 ETH" },
-    { outcome: "WASDx", chance: "19%", betYesAmount: "0.1 ETH", betNoAmount: "0.05 ETH" },
-    { outcome: "BOYS", chance: "19%", betYesAmount: "0.1 ETH", betNoAmount: "0.05 ETH" },
-    { outcome: "ORDEN", chance: "19%", betYesAmount: "0.1 ETH", betNoAmount: "0.05 ETH" },
-    { outcome: "QUEBEC", chance: "19%", betYesAmount: "0.1 ETH", betNoAmount: "0.05 ETH" },
-    { outcome: "POOP", chance: "19%", betYesAmount: "0.1 ETH", betNoAmount: "0.05 ETH" },
-    { outcome: "OTHERS", chance: "19%", betYesAmount: "0.1 ETH", betNoAmount: "0.05 ETH" },
+    { outcome: "WASD", chance: "19%", odds: "1.5"},
+    { outcome: "WASDx", chance: "19%", odds: "1.5"},
+    { outcome: "BOYS", chance: "19%", odds: "1.5"},
+    { outcome: "ORDEN", chance: "19%", odds: "1.5"},
+    { outcome: "QUEBEC", chance: "19%", odds: "1.5"},
+    { outcome: "POOP", chance: "19%", odds: "1.5"},
+    { outcome: "OTHERS", chance: "19%", odds: "1.5"},
   ];
 
   const [selectedRow, setSelectedRow] = useState<number>(0);
@@ -35,9 +35,9 @@ const PredictionTable: React.FC<PredictionTableProps> = ({ onSelectOutcome, sele
       <table className="table-auto w-full mb-4">
         <thead>
           <tr className="border-t border-b border-gray-300">
-            <th className="px-4 py-2 text-xs text-gray-500">OUTCOME</th>
-            <th className="px-4 py-2 text-xs text-gray-500">% CHANCE</th>
-            <th className="px-4 py-2"></th>
+            <th className="px-4 py-2 text-xs text-gray-500">Outcome</th>
+            <th className="px-4 py-2 text-xs text-gray-500">Total Bet</th>
+            <th className="px-4 py-2 text-xs text-gray-500">Odds</th>
             <th className="px-4 py-2"></th>
           </tr>
         </thead>
@@ -47,8 +47,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({ onSelectOutcome, sele
               key={index}
               outcome={item.outcome}
               chance={item.chance}
-              betYesAmount={item.betYesAmount}
-              betNoAmount={item.betNoAmount}
+              odds={item.odds}
               isSelected={selectedRow === index}
               selectedBet={selectedRow === index ? selectedBet : null}
               onSelectBet={(bet: 'YES' | 'NO') => handleSelectBet(index, bet)}

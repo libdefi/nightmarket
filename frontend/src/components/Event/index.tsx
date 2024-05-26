@@ -8,7 +8,7 @@ const Event: React.FC = () => {
   const [selectedBet, setSelectedBet] = useState<'YES' | 'NO'>('YES');
 
   return (
-    <div className="flex space-x-8">
+    <div className="flex space-x-16">
       <div className="flex-1 space-y-4">
         <div className="flex space-x-4">
           <div className="flex items-center space-x-2">
@@ -28,9 +28,7 @@ const Event: React.FC = () => {
         />
       </div>
       <Card 
-        selectedOutcome={selectedOutcome} 
-        selectedBet={selectedBet}
-        onSelectBet={setSelectedBet} 
+        selectedOutcome={selectedOutcome}
       />
     </div>
   );
