@@ -11,6 +11,7 @@ interface PredictionTableProps {
   selectedBet: 'YES' | 'NO';
   onSelectBet: (bet: 'YES' | 'NO') => void;
   selectedOption: number | null;
+  betDate: string;
 }
 
 const PredictionTable: React.FC<PredictionTableProps> = ({
@@ -19,6 +20,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
   selectedBet,
   onSelectBet,
   selectedOption,
+  betDate
 }) => {
   useEffect(() => {
     if (data && data.length > 0 && selectedOption === null) {
@@ -58,11 +60,11 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
         </tbody>
       </table>
       <div className="my-8">
-        <h3 className="text-lg font-semibold border-b border-gray-200 pb-1 mb-2">Rules</h3>
+        <h3 className="text-lg font-semibold border-b border-gray-200 pb-1 mb-2">Betting closes on {betDate}</h3>
         <p className="text-sm text-gray-700">
-          Nic Carter (@nic__carter) and David Hoffman (@TrustlessState) are scheduled for a Karate Combat fight for May 30, 2024. 
-          If the fight is considered a draw, is canceled, or otherwise comes to an end without a definitive winner, this market will resolve Yes. 
-          If the fight between Nic Carter and David Hoffman, currently scheduled for May 30, 2024, is postponed to a date before August, this market&apos;s timeframe.
+          The market outcome depends on alliance standings at the conclusion of round v0.11. If WASD secures the 1st spot on the alliance leaderboard [final], the market will resolve to &quot;WASD&quot;. Likewise, if WASDx, BOYS, ORDEN, QUEBEC, POOP, FOG, KONG or FUN secure the 1st spot on the alliance leaderboard [final], the market will respectively resolve as WASDx, BOYS, ORDEN, QUEBEC, POOP, FOG, KONG, FUN. Should any other alliance claim the 1st position, the market will resolve to “OTHERS”.
+          <br />
+          The resolution will be conducted by the admin (address: ) based on the official statement from the Primodium X account (<a href="https://x.com/primodiumgame" className="text-blue-500 hover:underline">https://x.com/primodiumgame</a>), however a consensus of credible reporting might also be used.
         </p>
       </div>
       <div className="my-8">

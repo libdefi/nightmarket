@@ -50,10 +50,6 @@ const Event: React.FC = () => {
           </div>
           <div className="flex items-center space-x-2">
             <ClockIcon className="h-6 w-6 text-gray-400" />
-            <p>End bet {convertBigIntToGMTString(bettingEndTime)} </p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <ClockIcon className="h-6 w-6 text-gray-400" />
             <p>Judge date {convertBigIntToGMTString(resultDeclareTime)}</p>
           </div>
         </div>
@@ -64,6 +60,7 @@ const Event: React.FC = () => {
           selectedBet={selectedBet}
           onSelectBet={setSelectedBet}
           selectedOption={selectedOption}
+          betDate={convertBigIntToGMTString(bettingEndTime)}
         />
       </div>
       <Card selectedOutcome={selectedOutcome} selectedOption={selectedOption} />
