@@ -4,6 +4,7 @@ import { WagmiProvider, createConfig, http } from "wagmi";
 import { baseSepolia, base } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
+import Header from "../components/Header";
 
 const testnetRedstone = {
   id: 17069,
@@ -75,7 +76,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider>
-          <Component {...pageProps} />
+          <div className="bg-default text-default">
+            <div className="mx-16">
+              <Header />
+              <Component {...pageProps} />
+            </div>
+          </div>
         </ConnectKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
