@@ -5,12 +5,54 @@ import { baseSepolia, base } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 
+const testnetRedstone = {
+  id: 17069,
+  name: 'Garnet Holesky',
+  network: 'garnetHolesky',
+  nativeCurrency: {
+    name: 'Ethereum',
+    symbol: 'ETH',
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://rpc.garnetchain.com'],
+      websocket: ['wss://rpc.garnetchain.com'],
+    },
+  },
+  blockExplorers: {
+    default: { name: 'Explorer', url: 'https://explorer.garnetchain.com/' },
+  },
+  testnet: true,
+};
+
+// const mainnetRedstone = {
+//   id: 690,
+//   name: 'Redstone',
+//   network: 'redstone',
+//   nativeCurrency: {
+//     name: 'Ethereum',
+//     symbol: 'ETH',
+//     decimals: 18,
+//   },
+//   rpcUrls: {
+//     default: {
+//       http: ['https://rpc.redstonechain.com'],
+//       websocket: ['wss://rpc.garnetchain.com'],
+//     },
+//   },
+//   blockExplorers: {
+//     default: { name: 'Explorer', url: 'https://explorer.garnetchain.com' },
+//   },
+//   testnet: false,
+// };
+
 const config = createConfig(
   getDefaultConfig({
     // Your dApps chains
-    chains: [base],
+    chains: [testnetRedstone],
     transports: {
-      [base.id]: http(base.rpcUrls.default.http[0]),
+      [testnetRedstone.id]: http(testnetRedstone.rpcUrls.default.http[0]),
     },
     // Required API Keys
     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
