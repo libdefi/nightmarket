@@ -33,7 +33,7 @@ const Home: NextPage = () => {
         )}
       </div>
       <Toaster />
-      <ToasterSonner position="top-center" />
+      <ToasterSonner position="bottom-right" />
     </div>
   );
 };

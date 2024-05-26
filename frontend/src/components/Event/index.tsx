@@ -18,8 +18,6 @@ const Event: React.FC = () => {
     functionName: 'getAllInfo',
   });
 
-  console.log("@@@result=", data);
-
   const [bettingEndTime, resultDeclareTime, optionNames, totalBets, odds] = data || [];
 
   const predictionTableData = optionNames?.map((outcome: string, index: number) => ({
