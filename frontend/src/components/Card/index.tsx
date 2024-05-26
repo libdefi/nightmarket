@@ -7,7 +7,7 @@ import { DarkMarketAbi } from 'constants/DarkMarketAbi';
 import { DarkMarketAddress } from 'constants/DarkMarketAddress';
 import { parseEther } from 'viem'
 import { getEthPrice } from '../../utils/getEthPrice'; 
-
+import LoadingIndicator from "components/LoadingIndicator";
 interface CardProps {
   selectedOutcome: string | null;
   selectedOption: number | null;
@@ -35,7 +35,7 @@ const Card: React.FC<CardProps> = ({ selectedOutcome, selectedOption }) => {
   const incrementAmount = () => setAmount(amount + 0.01);
   const decrementAmount = () => setAmount(amount > 0 ? amount - 0.01 : 0);
   const { isConnected } = useAccount();
-  const { writeContract } = useWriteContract();
+  const { isPending, writeContract } = useWriteContract();
 
   const bet = async () => {
     if (selectedOption === null) {
@@ -98,7 +98,9 @@ const Card: React.FC<CardProps> = ({ selectedOutcome, selectedOption }) => {
           onClick={bet}
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded m-1"
         >
-          Bet
+          {isPending ? (
+              <LoadingIndicator />
+            ) : "Bet"}
         </button>
       ) : (
         <ConnectWallet />
