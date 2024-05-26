@@ -3,13 +3,15 @@ import { ConnectWallet } from "components/Button/ConnectWallet";
 
 interface CardProps {
   selectedOutcome: string | null;
+  selectedOption: number | null;
 }
 
-const Card: React.FC<CardProps> = ({ selectedOutcome }) => {
+const Card: React.FC<CardProps> = ({ selectedOutcome,  selectedOption}) => {
   const [amount, setAmount] = useState(0);
 
   const incrementAmount = () => setAmount(amount + 0.01);
   const decrementAmount = () => setAmount(amount > 0 ? amount - 0.01 : 0);
+  console.log("@@@selectedOption=", selectedOption);
 
   return (
     <div className="p-4 border rounded-lg shadow-lg w-64 max-h-56 flex flex-col justify-between space-y-4 overflow-auto">

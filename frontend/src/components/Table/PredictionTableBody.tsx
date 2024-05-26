@@ -6,10 +6,19 @@ interface PredictionTableBodyProps {
   odds: string;
   isSelected: boolean;
   selectedBet: 'YES' | 'NO' | null;
-  onSelectBet: (bet: 'YES' | 'NO') => void;
+  onSelectBet: (bet: 'YES' | 'NO', option: number) => void;
+  option: number;
 }
 
-const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({ outcome, totalBet, odds, isSelected, selectedBet, onSelectBet }) => {
+const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({
+  outcome,
+  totalBet,
+  odds,
+  isSelected,
+  selectedBet,
+  onSelectBet,
+  option,
+}) => {
   return (
     <tr className="border-t border-b">
       <td className="px-4 py-2">
@@ -24,9 +33,11 @@ const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({ outcome, tota
       <td className="px-4 py-2 text-right">
         <button
           className={`px-8 py-2 rounded ${
-            isSelected && selectedBet === 'YES' ? 'bg-green-500 text-white' : 'bg-green-200 text-green-700'
+            isSelected && selectedBet === 'YES'
+              ? 'bg-green-500 text-white'
+              : 'bg-green-200 text-green-700'
           }`}
-          onClick={() => onSelectBet('YES')}
+          onClick={() => onSelectBet('YES', option)}
         >
           Bet
         </button>
