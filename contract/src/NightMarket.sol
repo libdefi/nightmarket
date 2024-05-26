@@ -32,6 +32,8 @@ contract NightMarket is Ownable {
     );
     event ResultDeclared(uint256 indexed round, uint256 indexed winningOption);
 
+    constructor() Ownable(msg.sender) {}
+
     modifier beforeBettingEnd(uint256 roundId) {
         require(
             block.timestamp < rounds[roundId].bettingEndTime,
@@ -93,7 +95,11 @@ contract NightMarket is Ownable {
         newRound.resultDeclareTime = _resultDeclareTime;
         newRound.returnRate = _returnRate;
         newRound.eventEnded = false;
-        newRound.optionNames = _optionNames;
+
+        for (uint256 i = 0; i < _optionNames.length; i++) {
+            newRound.optionNames.push(_optionNames[i]);
+        }
+
         newRound.creator = msg.sender;
     }
 
