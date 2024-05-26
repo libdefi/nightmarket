@@ -25,6 +25,8 @@ contract NightMarket is Ownable {
         uint256 amount
     );
     event ResultDeclared(uint256 indexed winningOption);
+    event RewardClaimed(address indexed user, uint256 amount);
+    event OwnerWithdrawn(uint256 amount);
 
     constructor(
         uint256 _bettingEndTime,
@@ -117,6 +119,28 @@ contract NightMarket is Ownable {
         emit ResultDeclared(_winningOption);
     }
 
+    function claimReward() external afterResultDeclare {
+        require(eventEnded, "Event has not ended yet");
+        Option storage o = options[winningOption];
+        uint256 userBet = o.bets[msg.sender];
+        require(userBet > 0, "No reward to claim");
+
+        uint256 reward = (userBet * totalPool * returnRate) /
+            (o.totalBets * 100);
+        o.bets[msg.sender] = 0;
+        payable(msg.sender).transfer(reward);
+
+        emit RewardClaimed(msg.sender, reward);
+    }
+
+    function withdraw() external onlyOwner {
+        require(eventEnded, "Event has not ended yet");
+        uint256 ownerAmount = (totalPool * (100 - returnRate)) / 100;
+        payable(owner()).transfer(ownerAmount);
+
+        emit OwnerWithdrawn(ownerAmount);
+    }
+
     function canClaimReward(address user) external view returns (bool) {
         if (!eventEnded) {
             return false;
@@ -125,5 +149,41 @@ contract NightMarket is Ownable {
         Option storage o = options[winningOption];
         uint256 userBet = o.bets[user];
         return userBet > 0;
+    }
+
+    function getUserBet(address user) external view returns (uint256[] memory) {
+        uint256[] memory bets = new uint256[](optionNames.length);
+        for (uint256 i = 0; i < optionNames.length; i++) {
+            bets[i] = options[i].bets[user];
+        }
+        return bets;
+    }
+
+    function getAllInfo()
+        external
+        view
+        returns (
+            uint256 _bettingEndTime,
+            uint256 _resultDeclareTime,
+            string[] memory _optionNames,
+            uint256[] memory _totalBets,
+            uint256[] memory _odds
+        )
+    {
+        _bettingEndTime = bettingEndTime;
+        _resultDeclareTime = resultDeclareTime;
+        _optionNames = optionNames;
+
+        _totalBets = new uint256[](optionNames.length);
+        _odds = new uint256[](optionNames.length);
+
+        for (uint256 i = 0; i < optionNames.length; i++) {
+            _totalBets[i] = options[i].totalBets;
+            if (totalPool > 0) {
+                _odds[i] = (options[i].totalBets * 10000) / totalPool;
+            } else {
+                _odds[i] = 0;
+            }
+        }
     }
 }
