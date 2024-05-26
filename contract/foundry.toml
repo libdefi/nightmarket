@@ -4,3 +4,6 @@ out = "out"
 libs = ["lib"]
 
 solc_version = "0.8.21"
+
+optimizer = true
+optimizer_runs = 20_000
