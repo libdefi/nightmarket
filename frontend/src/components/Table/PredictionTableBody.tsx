@@ -2,21 +2,21 @@ import React from 'react';
 
 interface PredictionTableBodyProps {
   outcome: string;
-  chance: string;
+  totalBet: string;
   odds: string;
   isSelected: boolean;
   selectedBet: 'YES' | 'NO' | null;
   onSelectBet: (bet: 'YES' | 'NO') => void;
 }
 
-const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({ outcome, chance, odds, isSelected, selectedBet, onSelectBet }) => {
+const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({ outcome, totalBet, odds, isSelected, selectedBet, onSelectBet }) => {
   return (
     <tr className="border-t border-b">
       <td className="px-4 py-2">
         <p className="text-2xl font-bold">{outcome}</p>
       </td>
       <td className="px-4 py-2">
-        <p className="text-2xl font-bold text-center">{chance}</p>
+        <p className="text-2xl font-bold text-center">{totalBet}</p>
       </td>
       <td className="px-4 py-2">
         <p className="text-2xl font-bold text-center">{odds}x</p>

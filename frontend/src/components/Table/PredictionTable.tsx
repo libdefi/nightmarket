@@ -2,27 +2,30 @@ import { useState, useEffect } from 'react';
 import PredictionTableBody from './PredictionTableBody';
 
 interface PredictionTableProps {
+  data: Array<{
+    outcome: string;
+    totalBet: string;
+    odds: string;
+  }>;
   onSelectOutcome: (outcome: string) => void;
   selectedBet: 'YES' | 'NO';
   onSelectBet: (bet: 'YES' | 'NO') => void;
 }
 
-const PredictionTable: React.FC<PredictionTableProps> = ({ onSelectOutcome, selectedBet, onSelectBet }) => {
-  const data = [
-    { outcome: "WASD", chance: "19%", odds: "1.5"},
-    { outcome: "WASDx", chance: "19%", odds: "1.5"},
-    { outcome: "BOYS", chance: "19%", odds: "1.5"},
-    { outcome: "ORDEN", chance: "19%", odds: "1.5"},
-    { outcome: "QUEBEC", chance: "19%", odds: "1.5"},
-    { outcome: "POOP", chance: "19%", odds: "1.5"},
-    { outcome: "OTHERS", chance: "19%", odds: "1.5"},
-  ];
+const PredictionTable: React.FC<PredictionTableProps> = ({
+    data,
+    onSelectOutcome,
+    selectedBet,
+    onSelectBet,
+  }) => {
 
   const [selectedRow, setSelectedRow] = useState<number>(0);
 
   useEffect(() => {
-    onSelectOutcome(data[0].outcome); // デフォルトで最初のアウトカムを選択
-  }, [onSelectOutcome]);
+    if (data && data.length > 0) {
+      onSelectOutcome(data[0].outcome);
+    }
+  }, [data, onSelectOutcome]);
 
   const handleSelectBet = (index: number, bet: 'YES' | 'NO') => {
     setSelectedRow(index);
@@ -46,7 +49,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({ onSelectOutcome, sele
             <PredictionTableBody
               key={index}
               outcome={item.outcome}
-              chance={item.chance}
+              totalBet={item.totalBet}
               odds={item.odds}
               isSelected={selectedRow === index}
               selectedBet={selectedRow === index ? selectedBet : null}
