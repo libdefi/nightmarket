@@ -6,11 +6,13 @@ import { useReadContract } from 'wagmi';
 import { DarkMarketAbi } from 'constants/DarkMarketAbi';
 import { DarkMarketAddress } from 'constants/DarkMarketAddress';
 import { calculateTotalBets, formatBigInt } from '../../utils/formatters';
+import { getEthPrice } from '../../utils/getEthPrice';
 
 const Event: React.FC = () => {
   const [selectedOutcome, setSelectedOutcome] = useState<string | null>(null);
   const [selectedBet, setSelectedBet] = useState<'YES' | 'NO'>('YES');
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [ethPrice, setEthPrice] = useState<number | null>(null);
 
   const { data, isError, isLoading } = useReadContract({
     abi: DarkMarketAbi,
@@ -19,6 +21,14 @@ const Event: React.FC = () => {
   });
 
   const [bettingEndTime, resultDeclareTime, optionNames, totalBets, odds] = data || [];
+
+  useEffect(() => {
+    const fetchEthPrice = async () => {
+      const price = await getEthPrice();
+      setEthPrice(price);
+    };
+    fetchEthPrice();
+  }, []);
 
   const predictionTableData = optionNames?.map((outcome: string, index: number) => ({
     outcome,
@@ -40,13 +50,20 @@ const Event: React.FC = () => {
     setSelectedOption(option);
   };
 
+  const totalBetsInEth = calculateTotalBets(totalBets);
+  const totalBetsInEthNumber = Number(totalBetsInEth);
+  const totalBetsInUsd = ethPrice !== null ? (totalBetsInEthNumber * ethPrice).toFixed(2) : null;
+
   return (
     <div className="flex space-x-16">
       <div className="flex-1 space-y-4">
         <div className="flex space-x-4">
           <div className="flex items-center space-x-2">
             <TrophyIcon className="h-6 w-6 text-gray-400" />
-            <p>{calculateTotalBets(totalBets)} ETH Bet</p>
+            <p>
+              {totalBetsInEth} ETH
+              {totalBetsInUsd && ` ($${totalBetsInUsd} USD)`}
+            </p>
           </div>
           <div className="flex items-center space-x-2">
             <ClockIcon className="h-6 w-6 text-gray-400" />

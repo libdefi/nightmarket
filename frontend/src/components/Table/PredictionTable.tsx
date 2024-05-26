@@ -60,8 +60,11 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
         </tbody>
       </table>
       <div className="my-8">
-        <h3 className="text-lg font-semibold border-b border-gray-200 pb-1 mb-2">Betting closes on {betDate}</h3>
-        <p className="text-sm">
+        <h3 className="text-lg font-semibold border-b border-gray-200 pb-1 mb-2">Rules</h3>
+        <p className="text-md">
+          Betting closes on {betDate}
+          <br/>
+          <br/>
           The market outcome depends on alliance standings at the conclusion of round v0.11. If WASD secures the 1st spot on the alliance leaderboard [final], the market will resolve to &quot;WASD&quot;. Likewise, if WASDx, BOYS, ORDEN, QUEBEC, POOP, FOG, KONG or FUN secure the 1st spot on the alliance leaderboard [final], the market will respectively resolve as WASDx, BOYS, ORDEN, QUEBEC, POOP, FOG, KONG, FUN. Should any other alliance claim the 1st position, the market will resolve to “OTHERS”.
           <br />
           The resolution will be conducted by the admin (address: ) based on the official statement from the Primodium X account (<a href="https://x.com/primodiumgame" className="text-blue-500 hover:underline">https://x.com/primodiumgame</a>), however a consensus of credible reporting might also be used.
