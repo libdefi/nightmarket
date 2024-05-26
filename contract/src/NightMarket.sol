@@ -40,10 +40,7 @@ contract NightMarket is Ownable {
             _optionNames.length > 0,
             "At least one option must be provided"
         );
-        require(
-            _returnRate >= 95,
-            "Return rate should be at least 95"
-        );
+        require(_returnRate >= 95, "Return rate should be at least 95");
 
         bettingEndTime = _bettingEndTime;
         resultDeclareTime = _resultDeclareTime;
@@ -120,12 +117,13 @@ contract NightMarket is Ownable {
         emit ResultDeclared(_winningOption);
     }
 
-    function claimReward() external {
-        require(eventEnded, "Event has not ended yet");
-        require(block.timestamp >= resultDeclareTime, "Result declare period has not ended yet");
+    function canClaimReward(address user) external view returns (bool) {
+        if (!eventEnded) {
+            return false;
+        }
 
         Option storage o = options[winningOption];
-        uint256 userBet = o.bets[msg.sender];
-        require(userBet > 0, "No winning bet found");
-
- 
+        uint256 userBet = o.bets[user];
+        return userBet > 0;
+    }
+}
