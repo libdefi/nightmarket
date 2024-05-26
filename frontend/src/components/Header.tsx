@@ -14,7 +14,13 @@ const Header = () => {
             height={50}
           />
         </Link>
-        <nav>
+        <nav className="flex items-center space-x-8">
+          <Link href="https://excalidraw.com/#room=30c820fcc99892de4389,rTu_ph_Gzzur9D7hI7F1WA" target="_blank"  className="hover:underline">
+              Wiki
+            </Link>
+            <Link href="https://x.com/0xnightmarket" className="hover:underline" target="_blank" rel="noopener noreferrer">
+              X
+            </Link>
           <ConnectWallet />
         </nav>
       </div>
