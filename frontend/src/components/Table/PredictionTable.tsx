@@ -65,8 +65,6 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
           hash: transaction.hash
         };
       }));
-
-      // nullのエントリをフィルタリングして削除
       const validActivities: Activity[] = activities.filter(activity => activity !== null) as Activity[];
       setActivities(validActivities);
     };

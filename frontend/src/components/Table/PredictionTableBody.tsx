@@ -33,16 +33,16 @@ const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({
   return (
     <tr className="border-t border-b">
       <td className="px-4 py-2">
-        <p className="text-2xl font-bold">{outcome}</p>
+        <p className="text-xl font-bold">{outcome}</p>
       </td>
       <td className="px-4 py-2">
-        <p className="text-2xl font-bold text-center">
+        <p className="text-xl font-bold text-center">
           {/* {totalBet} ETH */}
           {totalBetInUsd && ` $${totalBetInUsd}`}
         </p>
       </td>
       <td className="px-4 py-2">
-        <p className="text-2xl font-bold text-center">{odds}x</p>
+        <p className="text-xl font-bold text-center">{odds}x</p>
       </td>
       <td className="px-4 py-2 text-right">
         <button
