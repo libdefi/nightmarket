@@ -155,7 +155,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
             <p key={index}>
               <a className="text-blue-500" href={`https://explorer.garnetchain.com/address/${activity.from}`} target="_blank" rel="noopener noreferrer">
                 {activity.from}
-              </a> bought {activity.value} ETH
+              </a> bet {activity.value} ETH
             </p>
           ))}
         </div>
