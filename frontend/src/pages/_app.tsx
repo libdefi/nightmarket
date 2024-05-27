@@ -99,7 +99,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <EthPriceProvider>
           <Head>
             <title>Night Market</title>
-              <meta property='og:title' content='Night Market- Prediction market protocol that focuses on fully onchain games' />
+              <meta property='og:title' content='Night Market' />
               <meta
                 property='og:description'
                 content='NightMarket is a prediction market protocol that focuses on fully onchain games.'
@@ -109,7 +109,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
               <link rel='apple-touch-icon' sizes='200x200' href='/apple-touch-icon.png' />
               <meta name='twitter:card' content='summary_large_image' />
-              <meta name='twitter:title' content='Night Market - Prediction market protocol that focuses on fully onchain games.' />
+              <meta name='twitter:title' content='Night Market' />
               <meta
                 name='twitter:description'
                 content='NightMarket is a prediction market protocol that focuses on fully onchain games.'
