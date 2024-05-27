@@ -32,7 +32,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
 
   const handleSelectBet = (index: number, bet: 'YES' | 'NO') => {
     onSelectBet(bet);
-    onSelectOutcome(data[index].outcome, index);
+    onSelectOutcome(data[index]?.outcome, index);
   };
 
   const weiToEth = (wei: bigint): string => {
@@ -40,7 +40,6 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
     const ethValue = parseFloat(weiString) / 1e18;
     return ethValue.toFixed(6);
   };
-  
 
   return (
     <div>
@@ -86,7 +85,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
               }
               return (
                 <tr key={index} className="border-b border-gray-200">
-                  <td className="px-4 py-2 text-left">{data[index].outcome}</td>
+                  <td className="px-4 py-2 text-left">{data[index]?.outcome}</td>
                   <td className="px-4 py-2 text-center">{weiToEth(betAmount)} ETH</td>
                 </tr>
               );

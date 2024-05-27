@@ -7,20 +7,30 @@ import { DarkMarketAbi } from 'constants/DarkMarketAbi';
 import { DarkMarketAddress } from 'constants/DarkMarketAddress';
 import { calculateTotalBets, formatBigInt } from '../../utils/formatters';
 import { getEthPrice } from '../../utils/getEthPrice';
+import { useAccount } from "wagmi";
 
 const Event: React.FC = () => {
   const [selectedOutcome, setSelectedOutcome] = useState<string | null>(null);
   const [selectedBet, setSelectedBet] = useState<'YES' | 'NO'>('YES');
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [ethPrice, setEthPrice] = useState<number | null>(null);
-
-  const { data, isError, isLoading } = useReadContract({
+  const { isConnected, address} = useAccount();
+  const { data: dataAll, isError, isLoading } = useReadContract({
     abi: DarkMarketAbi,
     address: DarkMarketAddress,
     functionName: 'getAllInfo',
   });
 
-  const [bettingEndTime, resultDeclareTime, optionNames, totalBets, odds] = data || [];
+  const { data: dataUser } = useReadContract({
+    abi: DarkMarketAbi,
+    address: DarkMarketAddress,
+    functionName: 'getUserBet',
+    args: address ? ([address] as const) : undefined,
+  });
+
+  console.log("@@@dataUser=", dataUser)
+
+  const [bettingEndTime, resultDeclareTime, optionNames, totalBets, odds] = dataAll || [];
 
   useEffect(() => {
     const fetchEthPrice = async () => {
@@ -65,14 +75,11 @@ const Event: React.FC = () => {
               {totalBetsInUsd && ` ($${totalBetsInUsd} USD)`}
             </p>
           </div>
-          <div className="flex items-center space-x-2">
-            <ClockIcon className="h-6 w-6 text-gray-400" />
-            <p>Judge date {convertBigIntToGMTString(resultDeclareTime)}</p>
-          </div>
         </div>
         <h2 className="text-2xl font-bold">Which Alliance will win the 1st spot on Primodium?</h2>
         <PredictionTable
           data={predictionTableData || []}
+          dataUser={dataUser}
           onSelectOutcome={handleSelectOutcome}
           selectedBet={selectedBet}
           onSelectBet={setSelectedBet}
