@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import PredictionTableBody from './PredictionTableBody';
-import { DarkMarketAbi } from 'constants/DarkMarketAbi';
 import { DarkMarketAddress } from 'constants/DarkMarketAddress';
-import { calculateSingleBet, formatBigInt } from '../../utils/formatters';
+import { calculateSingleBet } from '../../utils/formatters';
 import { useEthPrice } from '../../lib/EthPriceContext';
 
 interface PredictionTableProps {
+  totalBetsInEth: string;
   data: Array<{
     outcome: string;
     totalBet: string;
@@ -28,6 +28,7 @@ interface Activity {
 
 
 const PredictionTable: React.FC<PredictionTableProps> = ({
+  totalBetsInEth,
   data,
   dataUser,
   onSelectOutcome,
@@ -81,8 +82,6 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
     onSelectOutcome(data[index]?.outcome, index);
   };
 
-
-
   return (
     <div>
       <table className="table-auto w-full mb-4">
@@ -100,7 +99,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
               key={index}
               outcome={item.outcome}
               totalBet={item.totalBet}
-              odds={item.odds}
+              totalBetsInEth={totalBetsInEth}
               isSelected={selectedOption === index}
               selectedBet={selectedOption === index ? selectedBet : null}
               onSelectBet={(bet: 'YES' | 'NO') => handleSelectBet(index, bet)}
