@@ -76,7 +76,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider>
-          <div className="bg-default text-default">
+          <div className="bg-default text-default h-auto">
             <div className="mx-16">
               <Header />
               <Component {...pageProps} />
