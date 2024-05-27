@@ -1,4 +1,6 @@
-# NightMarket Protocol
+# NightMarket Protocol V0
+
+![OGP_night_market](https://github.com/libdefi/nightmarket/assets/8872443/d0c65886-4300-44a3-a776-e5ecc64d322e)
 
 ## Idea
 
@@ -51,13 +53,6 @@ Integrating a betting/prediction feature enhances the experience and engagement 
   - Display betting options for each alliance.
   - Show % chance and price for "Yes" and "No" options for each alliance.
     - Alliances: WASD, WASDx, BOYS, ORDEN, QUEBEC, POOP, FOG, KONG, FUN, OTHERS.
-
-- **Betting Features:**
-  - Buy "Yes" or "No" for a selected outcome.
-  - Specify the amount to bet.
-  - Sell "Yes" or "No" for a selected outcome.
-  - Specify the amount to sell.
-
 - **Market Information:**
   - Detailed description of the rules.
   - Activity log: show which wallet bought/sold which outcome and for how much.
@@ -67,4 +62,8 @@ Integrating a betting/prediction feature enhances the experience and engagement 
 ## Tech Stack
 
 - **Framework:** Next.js 14
-- **Styling:** Tail
+- **Styling:** TailwindCSS
+- **UI Components:** Shadcn
+- **Wallet Integration:** ConnectKit
+- **Chain:** Redstone (https://redstone.xyz/ )
+
