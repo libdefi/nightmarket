@@ -58,9 +58,9 @@ const Card: React.FC<CardProps> = ({ selectedOutcome, selectedOption }) => {
               label: "Share on X",
               onClick: () => {
                 const shareText = encodeURIComponent(
-                  `I bet this \nhttps://darkmarket.vercel.app/`
+                  `My bet is in. Adding fuel to the fire of @primodiumgame Alliance War 🫡 \nhttps://0xnight.com/`
                 );
-                const hashtags = encodeURIComponent("darkmarket,redstone");
+                const hashtags = encodeURIComponent("nightmarket,redstone");
                 const related = encodeURIComponent("twitterapi,twitter");
                 const url = `https://x.com/intent/tweet?text=${shareText}&hashtags=${hashtags}&related=${related}`;
                 const newWindow = window.open(url, "_blank");

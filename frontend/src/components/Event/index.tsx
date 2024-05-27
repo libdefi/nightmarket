@@ -74,7 +74,7 @@ const Event: React.FC = () => {
             </p>
           </div>
         </div>
-        <h2 className="text-2xl font-bold">Which Alliance will win the 1st spot on Primodium?</h2>
+        <h2 className="text-2xl font-bold">Which alliance will win the 1st spot on Primodium v0.11?</h2>
         <PredictionTable
           data={predictionTableData || []}
           dataUser={dataUser}

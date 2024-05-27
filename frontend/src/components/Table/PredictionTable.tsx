@@ -58,6 +58,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
         if (!transaction) {
           return null;
         }
+        
         return {
           from: transaction.from,
           to: transaction.to,
@@ -143,9 +144,10 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
           Betting closes on {betDate}
           <br/>
           <br/>
-          The market outcome depends on alliance standings at the conclusion of round v0.11. If WASD secures the 1st spot on the alliance leaderboard [final], the market will resolve to &quot;WASD&quot;. Likewise, if WASDx, BOYS, ORDEN, QUEBEC, POOP, FOG, KONG or FUN secure the 1st spot on the alliance leaderboard [final], the market will respectively resolve as WASDx, BOYS, ORDEN, QUEBEC, POOP, FOG, KONG, FUN. Should any other alliance claim the 1st position, the market will resolve to “OTHERS”.
+          The market outcome depends on alliance standings at the conclusion of round v0.11. If WASD secures the 1st spot on the alliance leaderboard [final], the market will resolve to &quot;WASD&quot;. Likewise, if &quot;WASDx&quot;, &quot;BOYS&quot;, &quot;ORDEN&quot;, &quot;QUEBEC&quot;, &quot;POOP&quot;, &quot;FOG&quot;, &quot;KONG&quot; or &quot;FUN&quot; secure the 1st spot on the alliance leaderboard [final], the market will respectively resolve as &quot;WASDx&quot;, &quot;BOYS&quot;, &quot;ORDEN&quot;, &quot;QUEBEC&quot;, &quot;POOP&quot;, &quot;FOG&quot;, &quot;KONG&quot;, &quot;FUN&quot;. Should any other alliance claim the 1st position, the market will resolve to “OTHERS”.
           <br />
-          The resolution will be conducted by the admin (address: ) based on the official statement from the Primodium X account (<a href="https://x.com/primodiumgame" className="text-blue-500 hover:underline">https://x.com/primodiumgame</a>), however a consensus of credible reporting might also be used.
+          <br />
+          The resolution will be conducted by the admin (address: 0xB9e330591644f7def5c79Ca3C151b1dC0E0Ce502) based on the official statement from the Primodium X account (<a href="https://x.com/primodiumgame" className="text-blue-500 hover:underline">https://x.com/primodiumgame</a>), however a consensus of credible reporting might also be used.
         </p>
       </div>
       <div className="my-8">
