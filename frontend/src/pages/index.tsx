@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col">
       <div className="flex flex-grow justify-center mt-8">
         <Event />
       </div>
