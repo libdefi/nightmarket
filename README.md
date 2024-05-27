@@ -1,6 +1,7 @@
 # NightMarket Protocol V0
 
-![OGP_night_market](https://github.com/libdefi/nightmarket/assets/8872443/d0c65886-4300-44a3-a776-e5ecc64d322e)
+![ogp](https://github.com/libdefi/nightmarket/assets/8872443/5f5ea4e4-a949-49c4-b1df-bff93f45380f)
+
 
 ## Idea
 
