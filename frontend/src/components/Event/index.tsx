@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { TrophyIcon, ClockIcon } from '@heroicons/react/20/solid';
+import { useState } from 'react';
+import { TrophyIcon } from '@heroicons/react/20/solid';
 import PredictionTable from '../Table/PredictionTable';
 import Card from '../Card';
 import { useReadContract } from 'wagmi';
@@ -13,7 +13,7 @@ const Event: React.FC = () => {
   const [selectedOutcome, setSelectedOutcome] = useState<string | null>(null);
   const [selectedBet, setSelectedBet] = useState<'YES' | 'NO'>('YES');
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const { isConnected, address} = useAccount();
+  const { isConnected, address } = useAccount();
   const { ethPrice, updateEthPrice } = useEthPrice();
   const { data: dataAll, isError, isLoading } = useReadContract({
     abi: DarkMarketAbi,
@@ -29,8 +29,6 @@ const Event: React.FC = () => {
   });
 
   const [bettingEndTime, resultDeclareTime, optionNames, totalBets, odds] = dataAll || [];
-
-  
 
   const predictionTableData = optionNames?.map((outcome: string, index: number) => ({
     outcome,
@@ -55,6 +53,14 @@ const Event: React.FC = () => {
   const totalBetsInEth = calculateTotalBets(totalBets);
   const totalBetsInEthNumber = Number(totalBetsInEth);
   const totalBetsInUsd = ethPrice !== null ? (totalBetsInEthNumber * ethPrice).toFixed(2) : null;
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen" style={{ marginTop: '-10%' }}>
+        <div className="rounded-full h-20 w-20 bg-gray-500 animate-ping"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex space-x-16">
