@@ -6,15 +6,15 @@ import { useReadContract } from 'wagmi';
 import { DarkMarketAbi } from 'constants/DarkMarketAbi';
 import { DarkMarketAddress } from 'constants/DarkMarketAddress';
 import { calculateTotalBets, formatBigInt } from '../../utils/formatters';
-import { getEthPrice } from '../../utils/getEthPrice';
 import { useAccount } from "wagmi";
+import { useEthPrice } from '../../lib/EthPriceContext';
 
 const Event: React.FC = () => {
   const [selectedOutcome, setSelectedOutcome] = useState<string | null>(null);
   const [selectedBet, setSelectedBet] = useState<'YES' | 'NO'>('YES');
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [ethPrice, setEthPrice] = useState<number | null>(null);
   const { isConnected, address} = useAccount();
+  const { ethPrice, updateEthPrice } = useEthPrice();
   const { data: dataAll, isError, isLoading } = useReadContract({
     abi: DarkMarketAbi,
     address: DarkMarketAddress,
@@ -32,13 +32,7 @@ const Event: React.FC = () => {
 
   const [bettingEndTime, resultDeclareTime, optionNames, totalBets, odds] = dataAll || [];
 
-  useEffect(() => {
-    const fetchEthPrice = async () => {
-      const price = await getEthPrice();
-      setEthPrice(price);
-    };
-    fetchEthPrice();
-  }, []);
+  
 
   const predictionTableData = optionNames?.map((outcome: string, index: number) => ({
     outcome,

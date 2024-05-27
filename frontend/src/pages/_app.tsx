@@ -5,6 +5,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
+import { EthPriceProvider } from '../lib/EthPriceContext';
 
 const testnetRedstone = {
   id: 17069,
@@ -94,20 +95,22 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider>
-          <div className="bg-default text-default h-auto">
-            {!isMobile ? (
-              <div className="mx-16">
-                <Header />
-                <Component {...pageProps} />
-              </div>
-            ) : (
-              <div className="flex flex-col h-screen">
-                <div className="w-full h-full flex items-center justify-center">
-                  <span>Unavailable on mobile</span>
+          <EthPriceProvider>
+            <div className="bg-default text-default h-auto">
+              {!isMobile ? (
+                <div className="mx-16">
+                  <Header />
+                  <Component {...pageProps} />
                 </div>
-              </div>
-            )}
-          </div>
+              ) : (
+                <div className="flex flex-col h-screen">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <span>Unavailable on mobile</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </EthPriceProvider>
         </ConnectKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

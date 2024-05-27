@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getEthPrice } from '../../utils/getEthPrice';
-
+import { useEthPrice } from '../../lib/EthPriceContext';
 interface PredictionTableBodyProps {
   outcome: string;
   totalBet: string;
@@ -20,16 +19,8 @@ const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({
   onSelectBet,
   option,
 }) => {
-  const [ethPrice, setEthPrice] = useState<number | null>(null);
   const [totalBetInUsd, setTotalBetInUsd] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchEthPrice = async () => {
-      const price = await getEthPrice();
-      setEthPrice(price);
-    };
-    fetchEthPrice();
-  }, []);
+  const { ethPrice, updateEthPrice } = useEthPrice();
 
   useEffect(() => {
     if (ethPrice !== null) {

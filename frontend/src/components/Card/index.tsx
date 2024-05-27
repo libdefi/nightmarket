@@ -6,7 +6,8 @@ import { toast } from "sonner";
 import { DarkMarketAbi } from 'constants/DarkMarketAbi';
 import { DarkMarketAddress } from 'constants/DarkMarketAddress';
 import { parseEther } from 'viem'
-import { getEthPrice } from '../../utils/getEthPrice'; 
+import { useEthPrice } from '../../lib/EthPriceContext';
+
 import LoadingIndicator from "components/LoadingIndicator";
 interface CardProps {
   selectedOutcome: string | null;
@@ -15,16 +16,9 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ selectedOutcome, selectedOption }) => {
   const [amount, setAmount] = useState(0);
-  const [ethPrice, setEthPrice] = useState<number | null>(null);
   const [usdAmount, setUsdAmount] = useState(0);
 
-  useEffect(() => {
-    const fetchEthPrice = async () => {
-      const price = await getEthPrice();
-      setEthPrice(price);
-    };
-    fetchEthPrice();
-  }, []);
+  const { ethPrice, updateEthPrice } = useEthPrice();
 
   useEffect(() => {
     if (ethPrice !== null) {
