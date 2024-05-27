@@ -3,6 +3,8 @@ import { ethers } from 'ethers';
 import PredictionTableBody from './PredictionTableBody';
 import { DarkMarketAbi } from 'constants/DarkMarketAbi';
 import { DarkMarketAddress } from 'constants/DarkMarketAddress';
+import { calculateSingleBet, formatBigInt } from '../../utils/formatters';
+import { useEthPrice } from '../../lib/EthPriceContext';
 
 interface PredictionTableProps {
   data: Array<{
@@ -35,6 +37,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
   betDate
 }) => {
   const [activities, setActivities] = useState<Activity[]>([]);
+  const { ethPrice } = useEthPrice();
 
   useEffect(() => {
     if (data && data.length > 0 && selectedOption === null) {
@@ -78,11 +81,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
     onSelectOutcome(data[index]?.outcome, index);
   };
 
-  const weiToEth = (wei: bigint): string => {
-    const weiString = wei.toString();
-    const ethValue = parseFloat(weiString) / 1e18;
-    return ethValue.toFixed(6);
-  };
+
 
   return (
     <div>
@@ -126,10 +125,15 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
               if (betAmount === BigInt(0)) {
                 return null;
               }
+              const betInEth = calculateSingleBet(betAmount);
+              const betInUsd = ethPrice !== null ? (parseFloat(betInEth) * ethPrice).toFixed(2) : null;
               return (
                 <tr key={index} className="border-b border-gray-200">
                   <td className="px-4 py-2 text-left">{data[index]?.outcome}</td>
-                  <td className="px-4 py-2 text-center">{weiToEth(betAmount)} ETH</td>
+                  <td className="px-4 py-2 text-center">
+                    {betInEth} ETH
+                    {betInUsd && ` ($${betInUsd} USD)`}
+                  </td>
                 </tr>
               );
             })}
