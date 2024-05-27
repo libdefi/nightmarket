@@ -15,7 +15,7 @@ const Header = () => {
           />
         </Link>
         <nav className="flex items-center space-x-8">
-          <Link href="https://excalidraw.com/#room=30c820fcc99892de4389,rTu_ph_Gzzur9D7hI7F1WA" target="_blank"  className="hover:underline">
+          <Link href="https://kohei-eth.notion.site/NightMarket-Wiki-d6765d4c1c0e4bcc892a45e05da1f5aa" target="_blank"  className="hover:underline">
               Wiki
             </Link>
             <Link href="https://x.com/0xnightmarket" className="hover:underline" target="_blank" rel="noopener noreferrer">
