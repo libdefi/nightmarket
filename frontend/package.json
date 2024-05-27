@@ -16,6 +16,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "connectkit": "^1.7.1",
+    "ethers": "^6.12.1",
     "lucide-react": "^0.331.0",
     "next": "latest",
     "next-themes": "^0.2.1",
@@ -27,7 +28,8 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.3.3",
     "viem": "^2.7.9",
-    "wagmi": "^2.5.7"
+    "wagmi": "^2.5.7",
+    "web3": "^4.9.0"
   },
   "devDependencies": {
     "@types/node": "20.4.6",

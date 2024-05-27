@@ -1,5 +1,8 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
 import PredictionTableBody from './PredictionTableBody';
+import { DarkMarketAbi } from 'constants/DarkMarketAbi';
+import { DarkMarketAddress } from 'constants/DarkMarketAddress';
 
 interface PredictionTableProps {
   data: Array<{
@@ -15,6 +18,13 @@ interface PredictionTableProps {
   betDate: string;
 }
 
+interface Activity {
+  from: string;
+  to: string;
+  value: string;
+}
+
+
 const PredictionTable: React.FC<PredictionTableProps> = ({
   data,
   dataUser,
@@ -24,11 +34,45 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
   selectedOption,
   betDate
 }) => {
+  const [activities, setActivities] = useState<Activity[]>([]);
+
   useEffect(() => {
     if (data && data.length > 0 && selectedOption === null) {
       onSelectOutcome(data[0].outcome, 0);
     }
   }, [data, onSelectOutcome, selectedOption]);
+
+  useEffect(() => {
+    const fetchRecentTransactions = async () => {
+      const provider = new ethers.JsonRpcProvider('https://rpc.garnetchain.com');
+
+      const blockNumber = await provider.getBlockNumber();
+      const logs = await provider.getLogs({
+        address: DarkMarketAddress,
+        fromBlock: blockNumber - 10000,
+        toBlock: 'latest'
+      });
+
+      const activities = await Promise.all(logs.map(async (log) => {
+        const transaction = await provider.getTransaction(log.transactionHash);
+        if (!transaction) {
+          return null;
+        }
+        return {
+          from: transaction.from,
+          to: transaction.to,
+          value: ethers.formatEther(transaction.value),
+          hash: transaction.hash
+        };
+      }));
+
+      // nullのエントリをフィルタリングして削除
+      const validActivities: Activity[] = activities.filter(activity => activity !== null) as Activity[];
+      setActivities(validActivities);
+    };
+
+    fetchRecentTransactions();
+  }, []);
 
   const handleSelectBet = (index: number, bet: 'YES' | 'NO') => {
     onSelectBet(bet);
@@ -106,15 +150,18 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
           The resolution will be conducted by the admin (address: ) based on the official statement from the Primodium X account (<a href="https://x.com/primodiumgame" className="text-blue-500 hover:underline">https://x.com/primodiumgame</a>), however a consensus of credible reporting might also be used.
         </p>
       </div>
-      {/* <div className="my-8">
-        <h3 className="text-lg font-semibold border-b border-gray-200 pb-1 mb-2">Activities</h3>
+      <div className="my-8">
+        <h3 className="text-lg font-semibold border-b border-gray-200 pb-1 mb-2">Recent Activities</h3>
         <div className="text-sm ">
-          <p>0xEad515f64c8d5... sold 0.06 Yes for David Hoffman at 3.0¢ ($0)</p>
-          <p>0xEad515f64c8d5... sold 0.06 Yes for David Hoffman at 3.0¢ ($0)</p>
-          <p>0xEad515f64c8d5... sold 0.06 Yes for David Hoffman at 3.0¢ ($0)</p>
-          <p>0xEad515f64c8d5... sold 0.06 Yes for David Hoffman at 3.0¢ ($0)</p>
+          {activities.map((activity, index) => (
+            <p key={index}>
+              <a className="text-blue-500" href={`https://explorer.garnetchain.com/address/${activity.from}`} target="_blank" rel="noopener noreferrer">
+                {activity.from}
+              </a> bought {activity.value} ETH
+            </p>
+          ))}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
