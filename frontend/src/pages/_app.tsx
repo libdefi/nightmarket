@@ -1,10 +1,10 @@
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
 import { WagmiProvider, createConfig, http } from "wagmi";
-import { baseSepolia, base } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import Header from "../components/Header";
+import { useState, useEffect } from "react";
 
 const testnetRedstone = {
   id: 17069,
@@ -71,16 +71,42 @@ const config = createConfig(
 );
 
 const queryClient = new QueryClient();
+
 function MyApp({ Component, pageProps }: AppProps) {
+
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Run this effect once on mount
+    const handleResize = () => {
+      // Consider "mobile" if width is less than or equal to 768 pixels
+      setIsMobile(window.innerWidth <= 768);
+    };
+    // Check once on mount
+    handleResize();
+    // Optionally listen for resize events if you want to dynamically change the view
+    window.addEventListener('resize', handleResize);
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider>
           <div className="bg-default text-default h-auto">
-            <div className="mx-16">
-              <Header />
-              <Component {...pageProps} />
-            </div>
+            {!isMobile ? (
+              <div className="mx-16">
+                <Header />
+                <Component {...pageProps} />
+              </div>
+            ) : (
+              <div className="flex flex-col h-screen">
+                <div className="w-full h-full flex items-center justify-center">
+                  <span>Unavailable on mobile</span>
+                </div>
+              </div>
+            )}
           </div>
         </ConnectKitProvider>
       </QueryClientProvider>
