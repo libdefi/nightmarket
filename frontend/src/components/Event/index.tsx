@@ -28,8 +28,6 @@ const Event: React.FC = () => {
     args: address ? ([address] as const) : undefined,
   });
 
-  console.log("@@@dataUser=", dataUser)
-
   const [bettingEndTime, resultDeclareTime, optionNames, totalBets, odds] = dataAll || [];
 
   
