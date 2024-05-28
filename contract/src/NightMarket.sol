@@ -148,5 +148,9 @@ contract NightMarket is Ownable {
         _optionNames = optionNames;
 
         _totalBets = new uint256[](optionNames.length);
+
+        for (uint256 i = 0; i < optionNames.length; i++) {
+            _totalBets[i] = options[i].totalBets;
+        }
     }
 }

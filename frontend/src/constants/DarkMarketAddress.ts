@@ -1,1 +1,1 @@
-export const DarkMarketAddress = "0x705ae96fe4182c5c10c2f60a10775afc5dc00f46"
+export const DarkMarketAddress = "0x932918d30f054424a9d86b18c9b36a0496a18186"
