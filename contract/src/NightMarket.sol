@@ -30,14 +30,9 @@ contract NightMarket is Ownable {
 
     constructor(
         uint256 _bettingEndTime,
-        uint256 _resultDeclareTime,
         uint256 _returnRate,
         string[] memory _optionNames
     ) Ownable(msg.sender) {
-        require(
-            _bettingEndTime < _resultDeclareTime,
-            "Betting end time should be before result declare time"
-        );
         require(
             _optionNames.length > 0,
             "At least one option must be provided"
@@ -45,7 +40,6 @@ contract NightMarket is Ownable {
         require(_returnRate >= 95, "Return rate should be at least 95");
 
         bettingEndTime = _bettingEndTime;
-        resultDeclareTime = _resultDeclareTime;
         returnRate = _returnRate;
         eventEnded = false;
         creator = msg.sender;
@@ -72,7 +66,7 @@ contract NightMarket is Ownable {
 
     modifier beforeResultDeclare() {
         require(
-            block.timestamp < resultDeclareTime,
+            block.timestamp < bettingEndTime,
             "Result declare period has ended"
         );
         _;
@@ -80,7 +74,7 @@ contract NightMarket is Ownable {
 
     modifier afterResultDeclare() {
         require(
-            block.timestamp >= resultDeclareTime,
+            block.timestamp >= bettingEndTime,
             "Result declare period has not ended yet"
         );
         _;
@@ -95,10 +89,10 @@ contract NightMarket is Ownable {
     }
 
     function placeBet(uint256 option) external payable beforeBettingEnd {
-        require(msg.value >= 0.01 ether, "Minimum bet is 0.01 ETH");
+        require(msg.value >= 0.03 ether, "Minimum bet is 0.03 ETH");
         require(
-            msg.value % 0.01 ether == 0,
-            "Bet amount must be in increments of 0.01 ETH"
+            msg.value % 0.03 ether == 0,
+            "Bet amount must be in increments of 0.03 ETH"
         );
         require(option < optionNames.length, "Invalid option");
 
@@ -164,26 +158,13 @@ contract NightMarket is Ownable {
         view
         returns (
             uint256 _bettingEndTime,
-            uint256 _resultDeclareTime,
             string[] memory _optionNames,
-            uint256[] memory _totalBets,
-            uint256[] memory _odds
+            uint256[] memory _totalBets
         )
     {
         _bettingEndTime = bettingEndTime;
-        _resultDeclareTime = resultDeclareTime;
         _optionNames = optionNames;
 
         _totalBets = new uint256[](optionNames.length);
-        _odds = new uint256[](optionNames.length);
-
-        for (uint256 i = 0; i < optionNames.length; i++) {
-            _totalBets[i] = options[i].totalBets;
-            if (totalPool > 0) {
-                _odds[i] = (options[i].totalBets * 10000) / totalPool;
-            } else {
-                _odds[i] = 0;
-            }
-        }
     }
 }
