@@ -8,31 +8,10 @@ import { useState, useEffect } from "react";
 import { EthPriceProvider } from '../lib/EthPriceContext';
 import Head from "next/head";
 
-const testnetRedstone = {
-  id: 17069,
-  name: 'Garnet Holesky',
-  network: 'garnetHolesky',
-  nativeCurrency: {
-    name: 'Ethereum',
-    symbol: 'ETH',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://rpc.garnetchain.com'],
-      websocket: ['wss://rpc.garnetchain.com'],
-    },
-  },
-  blockExplorers: {
-    default: { name: 'Explorer', url: 'https://explorer.garnetchain.com/' },
-  },
-  testnet: true,
-};
-
-// const mainnetRedstone = {
-//   id: 690,
-//   name: 'Redstone',
-//   network: 'redstone',
+// const testnetRedstone = {
+//   id: 17069,
+//   name: 'Garnet Holesky',
+//   network: 'garnetHolesky',
 //   nativeCurrency: {
 //     name: 'Ethereum',
 //     symbol: 'ETH',
@@ -40,22 +19,43 @@ const testnetRedstone = {
 //   },
 //   rpcUrls: {
 //     default: {
-//       http: ['https://rpc.redstonechain.com'],
+//       http: ['https://rpc.garnetchain.com'],
 //       websocket: ['wss://rpc.garnetchain.com'],
 //     },
 //   },
 //   blockExplorers: {
-//     default: { name: 'Explorer', url: 'https://explorer.garnetchain.com' },
+//     default: { name: 'Explorer', url: 'https://explorer.garnetchain.com/' },
 //   },
-//   testnet: false,
+//   testnet: true,
 // };
+
+const mainnetRedstone = {
+  id: 690,
+  name: 'Redstone',
+  network: 'redstone',
+  nativeCurrency: {
+    name: 'Ethereum',
+    symbol: 'ETH',
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://rpc.redstonechain.com'],
+      websocket: ['wss://rpc.garnetchain.com'],
+    },
+  },
+  blockExplorers: {
+    default: { name: 'Explorer', url: 'https://explorer.garnetchain.com' },
+  },
+  testnet: false,
+};
 
 const config = createConfig(
   getDefaultConfig({
     // Your dApps chains
-    chains: [testnetRedstone],
+    chains: [mainnetRedstone],
     transports: {
-      [testnetRedstone.id]: http(testnetRedstone.rpcUrls.default.http[0]),
+      [mainnetRedstone.id]: http(mainnetRedstone.rpcUrls.default.http[0]),
     },
     // Required API Keys
     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,

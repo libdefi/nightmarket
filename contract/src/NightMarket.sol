@@ -68,10 +68,10 @@ contract NightMarket is Ownable {
     }
 
     function placeBet(uint256 option) external payable beforeBettingEnd {
-        require(msg.value >= 0.03 ether, "Minimum bet is 0.03 ETH");
+        require(msg.value >= 0.003 ether, "Minimum bet is 0.003 ETH");
         require(
-            msg.value % 0.03 ether == 0,
-            "Bet amount must be in increments of 0.03 ETH"
+            msg.value % 0.003 ether == 0,
+            "Bet amount must be in increments of 0.003 ETH"
         );
         require(option < optionNames.length, "Invalid option");
 

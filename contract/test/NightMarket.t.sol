@@ -20,18 +20,18 @@ contract NightMarketTest is Test {
         // Ensure we are within the betting period
         vm.warp(block.timestamp + 30 seconds);
 
-        // Place a bet of 0.03 ETH on option 0
-        nightMarket.placeBet{value: 0.03 ether}(0);
+        // Place a bet of 0.003 ETH on option 0
+        nightMarket.placeBet{value: 0.003 ether}(0);
 
         // Check that the bet was placed correctly
         uint256[] memory bets = nightMarket.getUserBet(address(this));
-        assertEq(bets[0], 0.03 ether);
+        assertEq(bets[0], 0.003 ether);
     }
 
     function testDeclareResult() public {
         // Place a bet to have some data
         vm.warp(block.timestamp + 30 seconds);
-        nightMarket.placeBet{value: 0.03 ether}(0);
+        nightMarket.placeBet{value: 0.003 ether}(0);
 
         // Warp to after betting period
         vm.warp(block.timestamp + 2 minutes);
@@ -47,7 +47,7 @@ contract NightMarketTest is Test {
     function testClaimReward() public {
         // Place a bet
         vm.warp(block.timestamp + 30 seconds);
-        nightMarket.placeBet{value: 0.03 ether}(0);
+        nightMarket.placeBet{value: 0.003 ether}(0);
 
         // Declare the result
         vm.warp(block.timestamp + 2 minutes);
@@ -66,7 +66,7 @@ contract NightMarketTest is Test {
     function testWithdrawOwner() public {
         // Place a bet
         vm.warp(block.timestamp + 30 seconds);
-        nightMarket.placeBet{value: 0.03 ether}(0);
+        nightMarket.placeBet{value: 0.003 ether}(0);
 
         // Declare the result
         vm.warp(block.timestamp + 2 minutes);
