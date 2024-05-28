@@ -80,7 +80,7 @@ const Card: React.FC<CardProps> = ({ selectedOutcome, selectedOption }) => {
         <h4 className="text-sm font-semibold">Amount</h4>
         <div className="flex items-center justify-between mt-1 border p-2 rounded-md">
           <button onClick={decrementAmount} className="px-2 py-1 border">-</button>
-          <span>{amount.toFixed(2)} ETH</span>
+          <span>{amount.toFixed(3)} ETH</span>
           <button onClick={incrementAmount} className="px-2 py-1 border">+</button>
         </div>
         <div className="mt-2 text-right text-sm ">
