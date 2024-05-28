@@ -21,14 +21,14 @@ export const EthPriceProvider: React.FC<EthPriceProviderProps> = ({ children }) 
 
   const updateEthPrice = async () => {
     try {
-      const response = await fetch('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD');
-      // https://api.coinpaprika.com/v1/tickers/eth-ethereum
-      // https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
+      const response = await fetch('/api/eth-price');
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
       const data = await response.json();
-      setEthPrice(data.USD);
+      setEthPrice(data.quotes.USD.price);
     } catch (error) {
       console.error('Failed to fetch ETH price:', error);
     }
