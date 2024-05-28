@@ -26,8 +26,8 @@ const Card: React.FC<CardProps> = ({ selectedOutcome, selectedOption }) => {
     }
   }, [amount, ethPrice]);
 
-  const incrementAmount = () => setAmount(amount + 0.01);
-  const decrementAmount = () => setAmount(amount > 0 ? amount - 0.01 : 0);
+  const incrementAmount = () => setAmount(amount + 0.03);
+  const decrementAmount = () => setAmount(amount > 0 ? amount - 0.03 : 0);
   const { isConnected } = useAccount();
   const { isPending, writeContract } = useWriteContract();
 

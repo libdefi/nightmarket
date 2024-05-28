@@ -28,12 +28,11 @@ const Event: React.FC = () => {
     args: address ? ([address] as const) : undefined,
   });
 
-  const [bettingEndTime, resultDeclareTime, optionNames, totalBets, odds] = dataAll || [];
+  const [bettingEndTime, optionNames, totalBets ] = dataAll || [];
 
   const predictionTableData = optionNames?.map((outcome: string, index: number) => ({
     outcome,
-    totalBet: formatBigInt(totalBets?.[index]),
-    odds: odds?.[index]?.toString() || '0',
+    totalBet: formatBigInt(totalBets?.[index])
   }));
 
   const convertBigIntToGMTString = (bigInt: bigint | undefined): string => {

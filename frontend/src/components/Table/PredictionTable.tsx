@@ -10,7 +10,6 @@ interface PredictionTableProps {
   data: Array<{
     outcome: string;
     totalBet: string;
-    odds: string;
   }>;
   dataUser: readonly bigint[] | undefined;
   onSelectOutcome: (outcome: string, option: number) => void;
