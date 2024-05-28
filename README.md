@@ -54,6 +54,7 @@ Integrating a betting/prediction feature enhances the experience and engagement 
   - Display betting options for each alliance.
   - Show % chance and price for "Yes" and "No" options for each alliance.
     - Alliances: WASD, WASDx, BOYS, ORDEN, QUEBEC, POOP, FOG, KONG, FUN, OTHERS.
+
 - **Market Information:**
   - Detailed description of the rules.
   - Activity log: show which wallet bought/sold which outcome and for how much.
@@ -68,3 +69,6 @@ Integrating a betting/prediction feature enhances the experience and engagement 
 - **Wallet Integration:** ConnectKit
 - **Chain:** Redstone (https://redstone.xyz/ )
 
+## Contract
+
+Redstone: https://explorer.redstone.xyz/address/0x078964fE4C34564381a779f17A2F77F98aF24882
