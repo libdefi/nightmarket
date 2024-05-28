@@ -47,7 +47,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
 
   useEffect(() => {
     const fetchRecentTransactions = async () => {
-      const provider = new ethers.JsonRpcProvider('https://rpc.garnetchain.com');
+      const provider = new ethers.JsonRpcProvider('https://rpc.redstonechain.com');
 
       const blockNumber = await provider.getBlockNumber();
       const logs = await provider.getLogs({
@@ -157,7 +157,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
         <div className="text-sm ">
           {activities.map((activity, index) => (
             <p key={index}>
-              <a className="text-blue-500" href={`https://explorer.garnetchain.com/address/${activity.from}`} target="_blank" rel="noopener noreferrer">
+              <a className="text-blue-500" href={`https://explorer.redstone.xyz/address/${activity.from}`} target="_blank" rel="noopener noreferrer">
                 {activity.from}
               </a> bet {activity.value} ETH
             </p>

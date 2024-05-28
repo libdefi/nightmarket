@@ -41,11 +41,11 @@ const mainnetRedstone = {
   rpcUrls: {
     default: {
       http: ['https://rpc.redstonechain.com'],
-      websocket: ['wss://rpc.garnetchain.com'],
+      websocket: ['wss://rpc.redstonechain.com'],
     },
   },
   blockExplorers: {
-    default: { name: 'Explorer', url: 'https://explorer.garnetchain.com' },
+    default: { name: 'Explorer', url: 'https://explorer.redstone.xyz' },
   },
   testnet: false,
 };
