@@ -12,7 +12,6 @@ contract NightMarket is Ownable {
     uint256 public bettingEndTime;
     uint256 public resultDeclareTime;
     uint256 public totalPool;
-    uint256 public returnRate;
     bool public eventEnded;
     uint256 public winningOption;
     string[] public optionNames;
@@ -30,21 +29,17 @@ contract NightMarket is Ownable {
 
     constructor(
         uint256 _bettingEndTime,
-        uint256 _returnRate,
         string[] memory _optionNames
     ) Ownable(msg.sender) {
         require(
             _optionNames.length > 0,
             "At least one option must be provided"
         );
-        require(_returnRate >= 95, "Return rate should be at least 95");
 
         bettingEndTime = _bettingEndTime;
-        returnRate = _returnRate;
         eventEnded = false;
         creator = msg.sender;
 
-        // Initialize optionNames array
         for (uint256 i = 0; i < _optionNames.length; i++) {
             optionNames.push(_optionNames[i]);
             options[i].totalBets = 0;
@@ -60,22 +55,6 @@ contract NightMarket is Ownable {
         require(
             block.timestamp >= bettingEndTime,
             "Betting period has not ended yet"
-        );
-        _;
-    }
-
-    modifier beforeResultDeclare() {
-        require(
-            block.timestamp < bettingEndTime,
-            "Result declare period has ended"
-        );
-        _;
-    }
-
-    modifier afterResultDeclare() {
-        require(
-            block.timestamp >= bettingEndTime,
-            "Result declare period has not ended yet"
         );
         _;
     }
@@ -106,30 +85,33 @@ contract NightMarket is Ownable {
 
     function declareResult(
         uint256 _winningOption
-    ) external onlyCreatorOrOwner afterBettingEnd beforeResultDeclare {
+    ) external onlyCreatorOrOwner afterBettingEnd {
         require(_winningOption < optionNames.length, "Invalid option");
         winningOption = _winningOption;
         eventEnded = true;
         emit ResultDeclared(_winningOption);
     }
 
-    function claimReward() external afterResultDeclare {
+    function claimReward() external afterBettingEnd {
         require(eventEnded, "Event has not ended yet");
         Option storage o = options[winningOption];
         uint256 userBet = o.bets[msg.sender];
         require(userBet > 0, "No reward to claim");
 
-        uint256 reward = (userBet * totalPool * returnRate) /
-            (o.totalBets * 100);
+        uint256 reward = (userBet * totalPool) / o.totalBets;
         o.bets[msg.sender] = 0;
         payable(msg.sender).transfer(reward);
 
         emit RewardClaimed(msg.sender, reward);
     }
 
-    function withdraw() external onlyOwner {
-        require(eventEnded, "Event has not ended yet");
-        uint256 ownerAmount = (totalPool * (100 - returnRate)) / 100;
+    // Measures to be taken if users are unable to withdraw
+    function withdrawOwner() external onlyOwner {
+        require(
+            block.timestamp >= bettingEndTime + 21 days,
+            "Withdrawal period has not started yet"
+        );
+        uint256 ownerAmount = address(this).balance;
         payable(owner()).transfer(ownerAmount);
 
         emit OwnerWithdrawn(ownerAmount);
