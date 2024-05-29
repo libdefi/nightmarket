@@ -52,7 +52,7 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
       const blockNumber = await provider.getBlockNumber();
       const logs = await provider.getLogs({
         address: DarkMarketAddress,
-        fromBlock: blockNumber - 10000,
+        fromBlock: blockNumber - 20000,
         toBlock: 'latest'
       });
 
@@ -150,18 +150,25 @@ const PredictionTable: React.FC<PredictionTableProps> = ({
           <br />
           <br />
           The resolution will be conducted by the admin (address: 0xB9e330591644f7def5c79Ca3C151b1dC0E0Ce502) based on the official statement from the Primodium X account (<a href="https://x.com/primodiumgame" className="text-blue-500 hover:underline">https://x.com/primodiumgame</a>), however a consensus of credible reporting might also be used.
+          <br />
+          <br />
+          <span className="text-red-500">Please be aware that this contract has not been audited, so you must assess the risks on your own.</span>
         </p>
       </div>
       <div className="my-8">
-        <h3 className="text-lg font-semibold border-b border-gray-200 pb-1 mb-2">Recent Activities</h3>
-        <div className="text-sm ">
-          {activities.map((activity, index) => (
-            <p key={index}>
-              <a className="text-blue-500" href={`https://explorer.redstone.xyz/address/${activity.from}`} target="_blank" rel="noopener noreferrer">
-                {activity.from}
-              </a> bet {activity.value} ETH
-            </p>
-          ))}
+        <h3 className="text-lg font-semibold border-b border-gray-200 pb-1 mb-2">Recent Activities (20000 blocks)</h3>
+        <div className="text-sm">
+          {activities && activities.length > 0 ? (
+            activities.map((activity, index) => (
+              <p key={index}>
+                <a className="text-blue-500" href={`https://explorer.redstone.xyz/address/${activity.from}`} target="_blank" rel="noopener noreferrer">
+                  {activity.from}
+                </a> bet {activity.value} ETH
+              </p>
+            ))
+          ) : (
+            <p>No recent activities found.</p>
+          )}
         </div>
       </div>
     </div>
