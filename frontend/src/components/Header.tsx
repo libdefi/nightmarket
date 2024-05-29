@@ -21,6 +21,9 @@ const Header = () => {
             <Link href="https://x.com/0xnightmarket" className="hover:underline" target="_blank" rel="noopener noreferrer">
               X
             </Link>
+            <Link href="https://www.primodium.com/" className="hover:underline" target="_blank" rel="noopener noreferrer">
+              Play Primodium
+            </Link>
           <ConnectWallet />
         </nav>
       </div>
