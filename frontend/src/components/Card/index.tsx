@@ -36,11 +36,12 @@ const Card: React.FC<CardProps> = ({ selectedOutcome, selectedOption }) => {
       toast.error("Please select an option before placing a bet.");
       return;
     }
-
     if (amount <= 0) {
       toast.error("Please enter an amount to bet.");
       return;
     }
+    const roundedAmount = Math.floor(amount * 1000) / 1000;
+    const amountInWei = parseEther(roundedAmount.toString());
 
     const selectedOptionBigInt = BigInt(selectedOption);
     writeContract(
@@ -49,7 +50,7 @@ const Card: React.FC<CardProps> = ({ selectedOutcome, selectedOption }) => {
         abi: DarkMarketAbi,
         functionName: "placeBet",
         args: [selectedOptionBigInt],
-        value: parseEther(amount.toString()),
+        value: amountInWei,
       },
       {
         onSuccess(data, variables, context) {
