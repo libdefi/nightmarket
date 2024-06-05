@@ -23,6 +23,22 @@ const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({
   const [totalBetInUsd, setTotalBetInUsd] = useState<string | null>(null);
   const [odds, setOdds] = useState<string | null>(null);
   const { ethPrice, updateEthPrice } = useEthPrice();
+  const [isBetEnabled, setIsBetEnabled] = useState(true);
+
+  useEffect(() => {
+    const checkBetAvailability = () => {
+      const currentDate = new Date();
+      const deadline = new Date('Wed, 05 Jun 2024 14:00:00 GMT');
+      if (currentDate > deadline) {
+        setIsBetEnabled(false);
+      }
+    };
+
+    checkBetAvailability();
+    const interval = setInterval(checkBetAvailability, 1000); // Check every second
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (ethPrice !== null) {
@@ -34,7 +50,6 @@ const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({
       if (totalBetsInEth !== null && totalBetUsd !== null) {
         const totalBetsInEthNumber = Number(totalBetsInEth);
         const calculatedOdds = (totalBetsInEthNumber / totalBetNumber).toFixed(2);
-        console.log("@@@ 3 calculatedOdds=", calculatedOdds)
         setOdds(calculatedOdds);
       }
     }
@@ -59,8 +74,9 @@ const PredictionTableBody: React.FC<PredictionTableBodyProps> = ({
             isSelected && selectedBet === 'YES'
               ? 'bg-green-500 text-white'
               : 'bg-green-200 text-green-700'
-          }`}
+          } ${!isBetEnabled && 'opacity-50 cursor-not-allowed'}`}
           onClick={() => onSelectBet('YES', option)}
+          disabled={!isBetEnabled}
         >
           Bet
         </button>

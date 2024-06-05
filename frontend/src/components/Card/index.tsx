@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { ConnectWallet } from "components/Button/ConnectWallet";
 import { useAccount } from "wagmi";
-import { useWriteContract, useWaitForTransactionReceipt } from "wagmi"
+import { useWriteContract } from "wagmi";
 import { toast } from "sonner";
 import { DarkMarketAbi } from 'constants/DarkMarketAbi';
 import { DarkMarketAddress } from 'constants/DarkMarketAddress';
-import { parseEther } from 'viem'
+import { parseEther } from 'viem';
 import { useEthPrice } from '../../lib/EthPriceContext';
-
 import LoadingIndicator from "components/LoadingIndicator";
+
 interface CardProps {
   selectedOutcome: string | null;
   selectedOption: number | null;
@@ -17,14 +17,30 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ selectedOutcome, selectedOption }) => {
   const [amount, setAmount] = useState(0);
   const [usdAmount, setUsdAmount] = useState(0);
+  const [isBetEnabled, setIsBetEnabled] = useState(true);
 
-  const { ethPrice, updateEthPrice } = useEthPrice();
+  const { ethPrice } = useEthPrice();
 
   useEffect(() => {
     if (ethPrice !== null) {
       setUsdAmount(amount * ethPrice);
     }
   }, [amount, ethPrice]);
+
+  useEffect(() => {
+    const checkBetAvailability = () => {
+      const currentDate = new Date();
+      const deadline = new Date('Wed, 05 Jun 2024 14:00:00 GMT');
+      if (currentDate > deadline) {
+        setIsBetEnabled(false);
+      }
+    };
+
+    checkBetAvailability();
+    const interval = setInterval(checkBetAvailability, 1000); // Check every second
+
+    return () => clearInterval(interval);
+  }, []);
 
   const incrementAmount = () => setAmount(amount + 0.003);
   const decrementAmount = () => setAmount(amount > 0 ? amount - 0.003 : 0);
@@ -91,11 +107,12 @@ const Card: React.FC<CardProps> = ({ selectedOutcome, selectedOption }) => {
       {isConnected ? (
         <button
           onClick={bet}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded m-1"
+          className={`bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded m-1 ${
+            !isBetEnabled && 'opacity-50 cursor-not-allowed'
+          }`}
+          disabled={!isBetEnabled}
         >
-          {isPending ? (
-              <LoadingIndicator />
-            ) : "Bet"}
+          {isPending ? <LoadingIndicator /> : "Bet"}
         </button>
       ) : (
         <ConnectWallet />
