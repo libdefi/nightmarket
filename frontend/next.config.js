@@ -7,7 +7,6 @@ const nextConfig = {
   },
   trailingSlash: true,
   basePath: '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://primodium.0xnight.com' : '',
   
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
