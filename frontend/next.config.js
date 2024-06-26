@@ -7,6 +7,7 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
+  basePath: '',
   
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
