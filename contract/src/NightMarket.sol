@@ -17,13 +17,17 @@ contract NightMarket is Ownable {
     string[] public optionNames;
     mapping(uint256 => Option) public options;
     address public creator;
+    address public winnerAddress;
 
     event BetPlaced(
         address indexed bettor,
         uint256 indexed option,
         uint256 amount
     );
-    event ResultDeclared(uint256 indexed winningOption);
+    event ResultDeclared(
+        uint256 indexed winningOption,
+        address indexed winnerAddress
+    );
     event RewardClaimed(address indexed user, uint256 amount);
     event OwnerWithdrawn(uint256 amount);
 
@@ -84,12 +88,19 @@ contract NightMarket is Ownable {
     }
 
     function declareResult(
-        uint256 _winningOption
+        uint256 _winningOption,
+        address _winnerAddress
     ) external onlyCreatorOrOwner afterBettingEnd {
         require(_winningOption < optionNames.length, "Invalid option");
         winningOption = _winningOption;
+        winnerAddress = _winnerAddress;
         eventEnded = true;
-        emit ResultDeclared(_winningOption);
+
+        uint256 winnerShare = (totalPool * 5) / 100;
+        payable(winnerAddress).transfer(winnerShare);
+        totalPool -= winnerShare;
+
+        emit ResultDeclared(_winningOption, _winnerAddress);
     }
 
     function claimReward() external afterBettingEnd {
