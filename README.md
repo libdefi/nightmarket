@@ -72,3 +72,19 @@ Integrating a betting/prediction feature enhances the experience and engagement 
 ## Contract
 
 Redstone: https://explorer.redstone.xyz/address/0x078964fE4C34564381a779f17A2F77F98aF24882
+
+
+
+## How to create 
+
+### Op Sepolia
+
+```
+forge create --rpc-url https://sepolia.optimism.io  --constructor-args 1719705600 '["WASD", "WASDx", "BOYS", "OTHERS"]' --private-key [PRIVATE KEY] src/NightMarket.sol:NightMarket --verify --verifier blockscout --verifier-url https://optimism-sepolia.blockscout.com/api?   --priority-gas-price 10
+
+forge verify-contract --verifier sourcify \
+--verifier-url https://optimism-sepolia.blockscout.com/api? 0xb1835612287491bb57d4b7827a37a79e0363afb4 src/NightMarket.sol:NightMarket
+```
+
+
+https://optimism-sepolia.blockscout.com/address/0xa8d4b19609c4252b0c4CC62Ad83f0Ebb7A1873b3
