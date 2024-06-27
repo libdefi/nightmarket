@@ -7,6 +7,8 @@ import Header from "../components/Header";
 import { useState, useEffect } from "react";
 import { EthPriceProvider } from '../lib/EthPriceContext';
 import Head from "next/head";
+import { ApolloProvider } from '@apollo/client';
+import client from '../../lib/apolloClient';
 
 // const testnetRedstone = {
 //   id: 17069,
@@ -96,44 +98,46 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider>
-          <EthPriceProvider>
-          <Head>
-            <title>Night Market</title>
-              <meta property='og:title' content='Night Market' />
-              <meta
-                property='og:description'
-                content='NightMarket is a prediction market protocol that focuses on fully onchain games.'
-              />
-              <meta property='og:image' content='/ogp.png' />
-              <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
-              <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
-              <link rel='apple-touch-icon' sizes='200x200' href='/apple-touch-icon.png' />
-              <meta name='twitter:card' content='summary_large_image' />
-              <meta name='twitter:title' content='Night Market' />
-              <meta
-                name='twitter:description'
-                content='NightMarket is a prediction market protocol that focuses on fully onchain games.'
-              />
-              <meta
-                name='twitter:image'
-                content='https://0xnight.com/ogp.png'
-              />
-            </Head>
-            <div className="bg-default text-default h-auto">
-              {!isMobile ? (
-                <div className="mx-16">
-                  <Header />
-                  <Component {...pageProps} />
-                </div>
-              ) : (
-                <div className="flex flex-col h-screen">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <span>Unavailable on mobile</span>
+          <ApolloProvider client={client}>
+            <EthPriceProvider>
+            <Head>
+              <title>Night Market</title>
+                <meta property='og:title' content='Night Market' />
+                <meta
+                  property='og:description'
+                  content='NightMarket is a prediction market protocol that focuses on fully onchain games.'
+                />
+                <meta property='og:image' content='/ogp.png' />
+                <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
+                <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
+                <link rel='apple-touch-icon' sizes='200x200' href='/apple-touch-icon.png' />
+                <meta name='twitter:card' content='summary_large_image' />
+                <meta name='twitter:title' content='Night Market' />
+                <meta
+                  name='twitter:description'
+                  content='NightMarket is a prediction market protocol that focuses on fully onchain games.'
+                />
+                <meta
+                  name='twitter:image'
+                  content='https://0xnight.com/ogp.png'
+                />
+              </Head>
+              <div className="bg-default text-default h-auto">
+                {!isMobile ? (
+                  <div className="mx-16">
+                    <Header />
+                    <Component {...pageProps} />
                   </div>
-                </div>
-              )}
-            </div>
-          </EthPriceProvider>
+                ) : (
+                  <div className="flex flex-col h-screen">
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span>Unavailable on mobile</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </EthPriceProvider>
+          </ApolloProvider>
         </ConnectKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

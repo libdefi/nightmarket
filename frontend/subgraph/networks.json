@@ -1,0 +1,8 @@
+{
+  "optimism-sepolia": {
+    "NightMarket": {
+      "address": "0xa8d4b19609c4252b0c4CC62Ad83f0Ebb7A1873b3",
+      "startBlock": 13844568
+    }
+  }
+}

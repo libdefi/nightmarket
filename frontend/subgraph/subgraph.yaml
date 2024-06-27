@@ -1,0 +1,38 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: NightMarket
+    network: optimism-sepolia
+    source:
+      address: "0xa8d4b19609c4252b0c4CC62Ad83f0Ebb7A1873b3"
+      abi: NightMarket
+      startBlock: 13844568
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - BetPlaced
+        - OwnerWithdrawn
+        - OwnershipTransferred
+        - ResultDeclared
+        - RewardClaimed
+      abis:
+        - name: NightMarket
+          file: ./abis/NightMarket.json
+      eventHandlers:
+        - event: BetPlaced(indexed address,indexed uint256,uint256)
+          handler: handleBetPlaced
+        - event: OwnerWithdrawn(uint256)
+          handler: handleOwnerWithdrawn
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: ResultDeclared(indexed uint256,indexed address)
+          handler: handleResultDeclared
+        - event: RewardClaimed(indexed address,uint256)
+          handler: handleRewardClaimed
+      file: ./src/night-market.ts
